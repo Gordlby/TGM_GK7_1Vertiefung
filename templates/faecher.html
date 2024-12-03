@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container py-4 py-xl-5">
+        <div class="row mb-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2>Fächer</h2>
+                <p class="w-lg-50">Siehe alle Fächer auf einem Blick</p>
+            </div>
+        </div>
+        <div class="row gy-4 row-cols-1 row-cols-md-2 row-width">
+            {% for fach in faecher_data %}
+                <div class="col"><a href="{% url 'Detail' fach.fach.id %}" style="text-decoration: none;">
+                    <div class="card py-3">
+                        <div class="container">
+                            <div class="row gy-4">
+                                <div class="col col-md-3 col-xs-12">
+                                    <h4 class="text-sm-center">{{ fach.fach.name }}</h4>
+                                    <p class="text-sm-center" style="color: rgb(113,121,130);">{{ fach.fach.description }}</p>
+                                </div>
+                                <div class="col d-flex flex-column justify-content-xl-center col-md-9 col-xs-12">
+                                    <div class="container" style="width: 100%;">
+                                        <div class="row" style="border-radius: 8px;overflow: hidden;">
+                                            {% if fach.zu_niedrig > 0 %}
+                                            <div class="col" style="background: var(--bs-teal);flex: 0 0 auto;width: {{ fach.zu_niedrig }}%">
+                                                <p></p>
+                                            </div>
+                                            {% endif %}
+                                            {% if fach.genau_richtig > 0 %}
+                                            <div class="col" style="background: var(--bs-green);flex: 0 0 auto;width: {{ fach.genau_richtig }}%">
+                                                <p></p>
+                                            </div>
+                                            {% endif %}
+                                            {% if fach.zu_hoch > 0 %}
+                                            <div class="col" style="background: #9dffe2;flex: 0 0 auto;width: {{ fach.zu_hoch }}%">
+                                                <p></p>
+                                            </div>
+                                            {% endif %}
+                                            {% if fach.total_votes is 0 %}
+                                            <div class="col" style="background: var(--bs-gray-300);">
+                                                <p></p>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="container" style="width: 100%;">
+                                        <div class="row">
+                                            {% if fach.zu_niedrig > 0 %}
+                                                <div class="col d-xl-flex justify-content-xl-center align-items-xl-center" style="flex: 0 0 auto;width: {{ fach.zu_niedrig }}%">
+                                                    <p style="margin: 0px;margin-left: 8px;">zu niedrig ({{ fach.zu_niedrig }}%)</p>
+                                                </div>
+                                            {% endif %}
+                                            {% if fach.genau_richtig > 0 %}
+                                                <div class="col d-xl-flex justify-content-xl-center align-items-xl-center" style="flex: 0 0 auto;width: {{ fach.genau_richtig }}%">
+                                                    <p style="margin: 0px;margin-left: 8px;">genau richtig ({{ fach.genau_richtig }}%)</p>
+                                                </div>
+                                            {% endif %}
+                                            {% if fach.zu_hoch > 0 %}
+                                                <div class="col d-xl-flex justify-content-xl-center align-items-xl-center" style="flex: 0 0 auto;width: {{ fach.zu_hoch }}%">
+                                                    <p style="margin: 0px;margin-left: 8px;">zu hoch ({{ fach.zu_hoch }}%)</p>
+                                                </div>
+                                            {% endif %}
+                                            {% if fach.total_votes is 0 %}
+                                                <div class="col d-xl-flex justify-content-xl-center align-items-xl-center">
+                                                    <p style="margin: 0px;margin-left: 8px;">Keine Votes</p>
+                                                </div>
+                                            {% endif %}
+                                            
+                                            
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a></div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

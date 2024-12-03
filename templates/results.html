@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container py-4 py-xl-3">
+        <div class="row">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2>SEW</h2>
+                <p class="w-lg-50" style="color: rgb(113,121,130);">Softwareentwicklung</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <section class="position-relative py-4 py-xl-5">
+                    <div class="container position-relative">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body p-sm-5">
+                                        <h2 class="text-center">Voting</h2>
+                                        <p class="w-lg-50 mb-4" style="color: rgb(113,121,130);">Schätze den Aufwand für
+                                            das Fach ein.</p>
+                                        <div class="col d-flex flex-column flex-grow-1 flex-shrink-1 justify-content-xl-center col-md-12 col-xs-12 mb-3">
+                                            <!--<div class="container" style="width: 100%;">
+                                                <div class="row" style="border-radius: 8px;overflow: hidden">
+                                                    <div class="col" style="background: var(--bs-teal);">
+                                                        <p></p>
+                                                    </div>
+                                                    <div class="col" style="background: var(--bs-green);">
+                                                        <p></p>
+                                                    </div>
+                                                    <div class="col" style="background: #9dffe2;">
+                                                        <p></p>
+                                                    </div>
+                                                    
+                                                    {% if zu_niedrig > 0 %}
+                                            <div class="col" style="background: var(--bs-teal);flex: 0 0 auto;width: 
+                                                {{ zu_niedrig }}%">
+                                                <p></p>
+                                            </div>
+                                            {% endif %}
+                                            {% if genau_richtig > 0 %}
+                                            <div class="col" style="background: var(--bs-green);flex: 0 0 auto;width: 
+                                                {{ genau_richtig }}%">
+                                                <p></p>
+                                            </div>
+                                            {% endif %}
+                                            {% if zu_hoch > 0 %}
+                                            <div class="col" style="background: #9dffe2;flex: 0 0 auto;width: 
+                                                {{ zu_hoch }}%">
+                                                <p></p>
+                                            </div>
+                                            {% endif %}
+                                            {% if total_votes is 0 %}
+                                            <div class="col" style="background: var(--bs-gray-300);">
+                                                <p></p>
+                                            </div>
+                                            {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="container" style="width: 100%;">
+                                                <div class="row">
+                                                    <div class="col d-xl-flex justify-content-xl-center align-items-xl-center">
+                                                        <p style="margin: 0px;margin-left: 8px;">zu niedrig ({{ zu_niedrig }}%)</p>
+                                                    </div>
+                                                    <div class="col d-xl-flex justify-content-xl-center align-items-xl-center">
+                                                        <p style="margin: 0px;margin-left: 8px;">genau richtig ({{ genau_richtig }}%)</p>
+                                                    </div>
+                                                    <div class="col d-xl-flex justify-content-xl-center align-items-xl-center">
+                                                        <p style="margin: 0px;margin-left: 8px;">zu hoch ({{ zu_hoch }}%)</p>
+                                                    </div>
+                                                </div>
+                                            </div>-->
+
+                                            <div class="container" style="width: 100%;">
+                                                <div class="row" style="border-radius: 8px;overflow: hidden;">
+                                                    {% if zu_niedrig > 0 %}
+                                                        <div class="col"
+                                                             style="background: var(--bs-teal);flex: 0 0 auto;width: {{ zu_niedrig }}%">
+                                                            <p></p>
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if genau_richtig > 0 %}
+                                                        <div class="col"
+                                                             style="background: var(--bs-green);flex: 0 0 auto;width: {{ genau_richtig }}%">
+                                                            <p></p>
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if zu_hoch > 0 %}
+                                                        <div class="col"
+                                                             style="background: #9dffe2;flex: 0 0 auto;width: {{ zu_hoch }}%">
+                                                            <p></p>
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if total_votes is 0 %}
+                                                        <div class="col" style="background: var(--bs-gray-300);">
+                                                            <p></p>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="container" style="width: 100%;">
+                                                <div class="row">
+                                                    {% if zu_niedrig > 0 %}
+                                                        <div class="col d-xl-flex justify-content-xl-center align-items-xl-center"
+                                                             style="flex: 0 0 auto;width: {{ zu_niedrig }}%">
+                                                            <p style="margin: 0px;margin-left: 8px;">zu niedrig
+                                                                ({{ zu_niedrig }}%)</p>
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if genau_richtig > 0 %}
+                                                        <div class="col d-xl-flex justify-content-xl-center align-items-xl-center"
+                                                             style="flex: 0 0 auto;width: {{ genau_richtig }}%">
+                                                            <p style="margin: 0px;margin-left: 8px;">genau richtig
+                                                                ({{ genau_richtig }}%)</p>
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if zu_hoch > 0 %}
+                                                        <div class="col d-xl-flex justify-content-xl-center align-items-xl-center"
+                                                             style="flex: 0 0 auto;width: {{ zu_hoch }}%">
+                                                            <p style="margin: 0px;margin-left: 8px;">zu hoch
+                                                                ({{ zu_hoch }}%)</p>
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if total_votes is 0 %}
+                                                        <div class="col d-xl-flex justify-content-xl-center align-items-xl-center">
+                                                            <p style="margin: 0px;margin-left: 8px;">Keine Votes</p>
+                                                        </div>
+                                                    {% endif %}
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a href="{% url 'Fächer' %}"><button class="btn btn-primary d-block w-100">Zurück</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}

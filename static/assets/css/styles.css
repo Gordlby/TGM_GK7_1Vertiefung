@@ -1,0 +1,25 @@
+.row-width > .col {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .col-xs-12 {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
+/* **** Track Styles **** */
+
+/* **** Chrome, Safari, Opera, and Edge Chromium **** */
+
+.crange, input[type="range"]::-webkit-slider-thumb {
+  width: 4rem;
+}
+
+/* ******* Firefox ******* */
+
+.crange input[type="range"]::-moz-range-thumb {
+  width: 4rem;
+}
+

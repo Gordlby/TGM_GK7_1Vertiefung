@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container py-4 py-xl-3">
+        <div class="row">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2>{{ fach.name }}</h2>
+                <p class="w-lg-50" style="color: rgb(113,121,130);">{{ fach.description }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <section class="position-relative py-4 py-xl-5">
+                    <div class="container position-relative">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body p-sm-5">
+                                        <h2 class="text-center">Voting</h2>
+                                        <p class="w-lg-50 mb-4" style="color: rgb(113,121,130);">Schätze den Aufwand für das Fach ein.</p>
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            <div class="mb-3">
+                                                <input class="form-range crange" type="range" value="1" min="0" max="2" step="1" name="aufwand" style="width: 80%;">
+                                                <div class="container" style="width: 100%;">
+                                                    <div class="row">
+                                                        <div class="col d-xl-flex flex-column justify-content-xl-center align-items-xl-center justify-content-xxl-start"><i class="fas fa-minus" style="color: rgb(30,201,151);transform: rotate(90deg);"></i>
+                                                            <p style="margin: 0px;margin-left: 8px;">zu niedrig</p>
+                                                        </div>
+                                                        <div class="col d-xl-flex flex-column justify-content-xl-center align-items-xl-center"><i class="fas fa-minus" style="color: rgb(30,201,151);transform: rotate(90deg);"></i>
+                                                            <p style="margin: 0px;margin-left: 8px;">genau richtig</p>
+                                                        </div>
+                                                        <div class="col d-xl-flex flex-column justify-content-xl-center align-items-xl-center justify-content-xxl-start"><i class="fas fa-minus" style="color: rgb(30,201,151);transform: rotate(90deg);"></i>
+                                                            <p style="margin: 0px;margin-left: 8px;">zu hoch</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div><button class="btn btn-primary d-block w-100" type="submit">Sende deine Antwort</button></div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}
