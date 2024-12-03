@@ -1,9 +1,10 @@
 import math
+from importlib.resources import contents
 
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import FachForm
-from .models import Fach
+from .models import Fach, Antwort
 
 
 # Create your views here.
@@ -13,10 +14,11 @@ def index(req):
     faecher = Fach.objects.all()
 
     for fach in faecher:
-        total_votes = fach.zu_niedrig + fach.genau_richtig + fach.zu_hoch
-        zu_niedrig_percentage = (math.floor(fach.zu_niedrig / total_votes * 10000)/100) if total_votes > 0 else 0
-        genau_richtig_percentage = (math.floor(fach.genau_richtig / total_votes * 10000)/100) if total_votes > 0 else 0
-        zu_hoch_percentage = (math.floor(fach.zu_hoch / total_votes * 10000)/100) if total_votes > 0 else 0
+        antworten = Antwort.objects.filter(fach=fach)
+        total_votes = antworten.count()
+        zu_niedrig_percentage = (math.floor(antworten.filter(choice=0).count() / total_votes * 10000)/100) if total_votes > 0 else 0
+        genau_richtig_percentage = (math.floor(antworten.filter(choice=1).count() / total_votes * 10000)/100) if total_votes > 0 else 0
+        zu_hoch_percentage = (math.floor(antworten.filter(choice=2).count() / total_votes * 10000)/100) if total_votes > 0 else 0
 
         faecher_data.append({
             'fach': fach,
@@ -41,16 +43,8 @@ def detail(req, fach_id):
         aufwand = req.POST['aufwand']
         if aufwand is not None:
             aufwand = int(aufwand)
-            if aufwand is 0:
-                zn = fach.zu_niedrig
-                fach.zu_niedrig = zn + 1
-            elif aufwand is 1:
-                zn = fach.genau_richtig
-                fach.genau_richtig = zn + 1
-            elif aufwand is 2:
-                zn = fach.zu_hoch
-                fach.zu_hoch = zn + 1
-            fach.save()
+            if 0 <= aufwand <= 2:
+                Antwort(fach=fach, choice=aufwand).save()
 
 
             return redirect('Ergebinsse', fach_id=fach_id)
@@ -64,11 +58,12 @@ def detail(req, fach_id):
 
 def results(req, fach_id):
     fach = get_object_or_404(Fach, id=fach_id)
+    antworten = Antwort.objects.filter(fach=fach)
 
-    total_votes = fach.zu_niedrig + fach.genau_richtig + fach.zu_hoch
-    zu_niedrig_percentage = (math.floor(fach.zu_niedrig / total_votes * 10000)/100) if total_votes > 0 else 0
-    genau_richtig_percentage = (math.floor(fach.genau_richtig / total_votes * 10000)/100) if total_votes > 0 else 0
-    zu_hoch_percentage = (math.floor(fach.zu_hoch / total_votes * 10000)/100) if total_votes > 0 else 0
+    total_votes = antworten.count()
+    zu_niedrig_percentage = (math.floor(antworten.filter(choice=0).count() / total_votes * 10000)/100) if total_votes > 0 else 0
+    genau_richtig_percentage = (math.floor(antworten.filter(choice=1).count() / total_votes * 10000)/100) if total_votes > 0 else 0
+    zu_hoch_percentage = (math.floor(antworten.filter(choice=2).count() / total_votes * 10000)/100) if total_votes > 0 else 0
     content = {
         'nav_active': 'Ergebinsse',
         'nav_extra': 'Ergebnis',
