@@ -45,7 +45,17 @@
                     <a class="nav-link {% if nav_active == 'Fächer' %}active{% endif %}" href="{% url 'Fächer' %}">Fächer</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if nav_active == 'Fach hinzufügen' %}active{% endif %}" href="{% url 'Fach hinzufügen' %}">Fach hinzufügen</a></li>
+                    <a class="nav-link {% if nav_active == 'Fach hinzufügen' %}active{% endif %}" href="{% url 'Fach hinzufügen' %}">Fach hinzufügen</a>
+                </li>
+            {% if not login %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'login' %}">Login</a>
+                </li>
+            {% endif %}
             </ul>
         </div>
     </div>

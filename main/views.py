@@ -1,17 +1,23 @@
 import math
-from importlib.resources import contents
+from types import MethodType
 
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import FachForm
 from .models import Fach, Antwort
+loginURL = "login"
 
 
 # Create your views here.
 
+#@login_required(login_url='login')
+@permission_required("main.view_fach", login_url=loginURL)
 def index(req):
     faecher_data = []
     faecher = Fach.objects.all()
+    print(req.user.has_perm("main.view_fach"))
 
     for fach in faecher:
         antworten = Antwort.objects.filter(fach=fach)
@@ -36,6 +42,7 @@ def index(req):
     }
     return render(req, "faecher.html", content)
 
+@permission_required(["main.view_fach", "main.view_antwort", "main.add_antwort"], raise_exception=True)
 def detail(req, fach_id):
     fach = get_object_or_404(Fach, id=fach_id)
 
@@ -56,6 +63,7 @@ def detail(req, fach_id):
     }
     return render(req, "detail.html", content)
 
+@permission_required(["main.view_fach", "main.view_antwort"], raise_exception=True)
 def results(req, fach_id):
     fach = get_object_or_404(Fach, id=fach_id)
     antworten = Antwort.objects.filter(fach=fach)
@@ -75,6 +83,7 @@ def results(req, fach_id):
     }
     return render(req, "results.html", content)
 
+@permission_required(["main.view_fach", "main.add_fach"], raise_exception=True)
 def fachadd(req):
     if req.method == 'POST':
         form = FachForm(req.POST)
@@ -91,3 +100,20 @@ def fachadd(req):
         'form': form
     }
     return render(req, "fachadd.html", content)
+
+def vlogin(req):
+    if req.method == 'POST':
+        username = req.POST['username']
+        password = req.POST['password']
+        user = authenticate(req, username=username, password=password)
+        if user:
+            login(req, user)
+            next_url = req.GET.get("next") or "index"
+            return redirect(next_url)
+    else:
+        return render(req, "login.html",{'login': True})
+
+@login_required(login_url='login')
+def vlogout(req):
+    logout(req)
+    return redirect("/")

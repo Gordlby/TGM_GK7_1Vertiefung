@@ -8,4 +8,6 @@ urlpatterns = [
     path('results/<int:fach_id>/', views.results, name='Ergebinsse'),
     path('fachadd/', views.fachadd, name='Fach hinzufügen'),
     path('api/', include('main.api.urls')),
+    path('login/', views.vlogin, name='login'),
+    path('logout/', views.vlogout, name='logout'),
 ]
